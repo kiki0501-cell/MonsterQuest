@@ -10,7 +10,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    min-height:100vh;
     color:white;
 }
 
@@ -18,9 +18,17 @@ body{
     text-align:center;
 }
 
+.hidden{
+    display:none;
+}
+
 h1{
     font-size:48px;
     margin-bottom:50px;
+}
+
+h2{
+    margin-bottom:15px;
 }
 
 button{
@@ -35,8 +43,8 @@ button{
     border-radius:12px;
 }
 
-button:hover{
-    background:#27ae60;
+button:active{
+    transform:scale(0.96);
 }
 
 input{
@@ -47,11 +55,69 @@ input{
 }
 
 canvas{
-    margin-top:20px;
+    margin-top:15px;
     border:4px solid white;
     image-rendering:pixelated;
 }
 
-.hidden{
-    display:none;
+/* ---------- 방향패드 ---------- */
+
+#controls{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+
+.middle{
+    display:flex;
+    gap:10px;
+}
+
+.move{
+    width:70px;
+    height:70px;
+    margin:0;
+    padding:0;
+    font-size:28px;
+    border-radius:18px;
+    background:#3b82f6;
+}
+
+.move.center{
+    background:#666;
+}
+
+/* ---------- 대화창 ---------- */
+
+#dialogBox{
+
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    width:320px;
+
+    background:white;
+
+    color:black;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    box-shadow:0 0 15px rgba(0,0,0,.4);
+
+}
+
+#dialogText{
+
+    font-size:18px;
+
+    margin-bottom:15px;
+
 }
