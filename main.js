@@ -7,13 +7,16 @@ const config = {
 
     type: Phaser.AUTO,
 
-    width: 800,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 360,
+        height: 640
+    },
 
-    height: 600,
+    backgroundColor:"#14213d",
 
-    backgroundColor: "#14213d",
-
-    scene: [
+    scene:[
         BootScene,
         MenuScene,
         TownScene
