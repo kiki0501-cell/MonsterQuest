@@ -1,51 +1,24 @@
 import BootScene from "./scenes/BootScene.js";
 import MenuScene from "./scenes/MenuScene.js";
-import VillageScene from "./scenes/VillageScene.js";
+import TownScene from "./scenes/TownScene.js";
 
 
 const config = {
 
     type: Phaser.AUTO,
 
-    parent: "game",
+    width: 800,
 
-    width: 360,
-
-    height: 640,
-
-    pixelArt: true,
+    height: 600,
 
 
-    scale: {
-
-        mode: Phaser.Scale.FIT,
-
-        autoCenter: Phaser.Scale.CENTER_BOTH
-
-    },
+    backgroundColor:"#14213d",
 
 
-    physics: {
-
-        default: "arcade",
-
-        arcade: {
-
-            debug: false
-
-        }
-
-    },
-
-
-    scene: [
-
+    scene:[
         BootScene,
-
         MenuScene,
-
-        VillageScene
-
+        TownScene
     ]
 
 };
