@@ -7,8 +7,11 @@ export default class MenuScene extends Phaser.Scene {
 
     create(){
 
+        const centerX = this.scale.width / 2;
+
+
         this.add.text(
-            400,
+            centerX,
             180,
             "MONSTER\nQUEST",
             {
@@ -16,11 +19,13 @@ export default class MenuScene extends Phaser.Scene {
                 color:"#ffffff",
                 align:"center"
             }
-        ).setOrigin(0.5);
+        )
+        .setOrigin(0.5);
+
 
 
         let start = this.add.text(
-            400,
+            centerX,
             350,
             "모험 시작",
             {
@@ -31,6 +36,7 @@ export default class MenuScene extends Phaser.Scene {
         )
         .setOrigin(0.5)
         .setInteractive();
+
 
 
         start.on("pointerdown",()=>{
