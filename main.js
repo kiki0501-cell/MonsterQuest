@@ -11,11 +11,9 @@ const config = {
 
     height: 600,
 
+    backgroundColor: "#14213d",
 
-    backgroundColor:"#14213d",
-
-
-    scene:[
+    scene: [
         BootScene,
         MenuScene,
         TownScene
