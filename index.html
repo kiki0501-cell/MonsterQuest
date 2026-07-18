@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- 타이틀 화면 -->
+<!-- 타이틀 -->
 <div id="titleScreen" class="screen">
 
     <h1>MONSTER<br>QUEST</h1>
@@ -22,7 +22,7 @@
 
 </div>
 
-<!-- 이름 입력 -->
+<!-- 이름 -->
 <div id="nameScreen" class="screen hidden">
 
     <h2>플레이어 이름</h2>
@@ -39,7 +39,7 @@
 
 </div>
 
-<!-- 게임 화면 -->
+<!-- 게임 -->
 <div id="gameScreen" class="screen hidden">
 
     <h2 id="townName">새벽마을</h2>
@@ -49,6 +49,33 @@
         width="320"
         height="320">
     </canvas>
+
+    <!-- 대화창 -->
+    <div id="dialogBox" class="hidden">
+        <p id="dialogText"></p>
+        <button onclick="closeDialog()">닫기</button>
+    </div>
+
+    <!-- 모바일 방향패드 -->
+    <div id="controls">
+
+        <button class="move" onclick="movePlayer('up')">▲</button>
+
+        <div class="middle">
+
+            <button class="move" onclick="movePlayer('left')">◀</button>
+
+            <button class="move center">
+                ●
+            </button>
+
+            <button class="move" onclick="movePlayer('right')">▶</button>
+
+        </div>
+
+        <button class="move" onclick="movePlayer('down')">▼</button>
+
+    </div>
 
 </div>
 
