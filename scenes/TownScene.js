@@ -8,7 +8,7 @@ export default class TownScene extends Phaser.Scene {
     create(){
 
         this.add.text(
-            400,
+            180,
             80,
             "새벽마을",
             {
@@ -19,8 +19,8 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.player = this.add.rectangle(
-            400,
-            300,
+            180,
+            320,
             32,
             32,
             0x3366ff
@@ -41,17 +41,21 @@ export default class TownScene extends Phaser.Scene {
             this.player.x -= speed;
         }
 
+
         if(this.cursors.right.isDown){
             this.player.x += speed;
         }
+
 
         if(this.cursors.up.isDown){
             this.player.y -= speed;
         }
 
+
         if(this.cursors.down.isDown){
             this.player.y += speed;
         }
+
 
     }
 
