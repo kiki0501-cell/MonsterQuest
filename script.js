@@ -1,123 +1,155 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const SIZE = 32;
+
+let player = {
+    x: 5,
+    y: 5
+};
+
+const professor = {
+    x: 4,
+    y: 2
+};
+
+const map = [
+    "GGGGGGGGGG",
+    "GTTGGGGTTG",
+    "GGGGGGGGGG",
+    "GGGHHGGGGG",
+    "GGGGGGGGGG",
+    "GGGGGGGGGG",
+    "GGTTGGGGGG",
+    "GGGGGGTTGG",
+    "GGGGGGGGGG",
+    "GGGGGGGGGG"
+];
+
+function newGame() {
+    document.getElementById("titleScreen").classList.add("hidden");
+    document.getElementById("nameScreen").classList.remove("hidden");
 }
 
-body{
-    background:#14213d;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    color:white;
+function startAdventure() {
+
+    const name = document.getElementById("playerName").value.trim();
+
+    if (name === "") {
+        alert("이름을 입력하세요!");
+        return;
+    }
+
+    document.getElementById("nameScreen").classList.add("hidden");
+    document.getElementById("gameScreen").classList.remove("hidden");
+
+    drawMap();
 }
 
-.screen{
-    text-align:center;
+function drawMap() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let y = 0; y < 10; y++) {
+
+        for (let x = 0; x < 10; x++) {
+
+            const tile = map[y][x];
+
+            if (tile === "G") ctx.fillStyle = "#79d45b";
+            if (tile === "T") ctx.fillStyle = "#1d7f35";
+            if (tile === "H") ctx.fillStyle = "#8b5a2b";
+
+            ctx.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
+
+            if (tile === "H") {
+                ctx.fillStyle = "#d43d3d";
+                ctx.fillRect(x * SIZE + 8, y * SIZE + 8, 16, 16);
+            }
+        }
+    }
+
+    // 애드박사
+    ctx.fillStyle = "#ffcc66";
+    ctx.fillRect(
+        professor.x * SIZE + 6,
+        professor.y * SIZE + 6,
+        20,
+        20
+    );
+
+    // 플레이어
+    ctx.fillStyle = "#0066ff";
+    ctx.fillRect(
+        player.x * SIZE + 6,
+        player.y * SIZE + 6,
+        20,
+        20
+    );
 }
 
-.hidden{
-    display:none;
+function canMove(x, y) {
+
+    if (x < 0 || x > 9 || y < 0 || y > 9)
+        return false;
+
+    const tile = map[y][x];
+
+    if (tile === "T") return false;
+    if (tile === "H") return false;
+
+    return true;
 }
 
-h1{
-    font-size:48px;
-    margin-bottom:50px;
+function movePlayer(dir) {
+
+    let nx = player.x;
+    let ny = player.y;
+
+    if (dir === "up") ny--;
+    if (dir === "down") ny++;
+    if (dir === "left") nx--;
+    if (dir === "right") nx++;
+
+    if (canMove(nx, ny)) {
+        player.x = nx;
+        player.y = ny;
+    }
+
+    checkNPC();
+
+    drawMap();
 }
 
-h2{
-    margin-bottom:15px;
-}
+document.addEventListener("keydown", function (e) {
 
-button{
-    display:block;
-    width:220px;
-    margin:15px auto;
-    padding:15px;
-    font-size:22px;
-    background:#2ecc71;
-    color:white;
-    border:none;
-    border-radius:12px;
-}
+    if (e.key === "ArrowUp") movePlayer("up");
+    if (e.key === "ArrowDown") movePlayer("down");
+    if (e.key === "ArrowLeft") movePlayer("left");
+    if (e.key === "ArrowRight") movePlayer("right");
 
-button:active{
-    transform:scale(0.96);
-}
+});
 
-input{
-    width:220px;
-    padding:12px;
-    font-size:20px;
-    margin:20px 0;
-}
+function checkNPC() {
 
-canvas{
-    margin-top:15px;
-    border:4px solid white;
-    image-rendering:pixelated;
-}
+    const dx = Math.abs(player.x - professor.x);
+    const dy = Math.abs(player.y - professor.y);
 
-/* ---------- 방향패드 ---------- */
+    if (dx + dy === 1) {
 
-#controls{
-    margin-top:20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-}
+        document.getElementById("dialogText").innerText =
+            "애드박사 : 안녕! 몬스터를 연구하고 있단다. 조금만 기다려 주렴!";
 
-.middle{
-    display:flex;
-    gap:10px;
-}
+        document.getElementById("dialogBox").classList.remove("hidden");
 
-.move{
-    width:70px;
-    height:70px;
-    margin:0;
-    padding:0;
-    font-size:28px;
-    border-radius:18px;
-    background:#3b82f6;
-}
-
-.move.center{
-    background:#666;
-}
-
-/* ---------- 대화창 ---------- */
-
-#dialogBox{
-
-    position:fixed;
-
-    left:50%;
-    bottom:25px;
-
-    transform:translateX(-50%);
-
-    width:320px;
-
-    background:white;
-
-    color:black;
-
-    border-radius:12px;
-
-    padding:18px;
-
-    box-shadow:0 0 15px rgba(0,0,0,.4);
+    }
 
 }
 
-#dialogText{
+function closeDialog() {
 
-    font-size:18px;
-
-    margin-bottom:15px;
+    document.getElementById("dialogBox").classList.add("hidden");
 
 }
+
+drawMap();
