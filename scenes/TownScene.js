@@ -11,26 +11,24 @@ export default class TownScene extends Phaser.Scene {
         const h = this.scale.height;
 
 
-        // 배경
         this.cameras.main.setBackgroundColor("#3a7d44");
 
 
-        // 마을 이름
         this.add.text(
-            w / 2,
+            w/2,
             60,
             "새벽마을",
             {
                 fontSize:"48px",
-                color:"#ffffff"
+                color:"#ffffff",
+                fontFamily:"Jua"
             }
         ).setOrigin(0.5);
 
 
 
-        // 집
         this.add.rectangle(
-            w / 2,
+            w/2,
             220,
             120,
             100,
@@ -39,7 +37,7 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.add.text(
-            w / 2,
+            w/2,
             220,
             "🏠",
             {
@@ -49,7 +47,6 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-        // 나무
         this.createTree(60,200);
         this.createTree(w-60,200);
         this.createTree(80,450);
@@ -57,60 +54,65 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-        // 플레이어
         this.player = this.add.rectangle(
-            w / 2,
-            h / 2,
+            w/2,
+            h/2,
             32,
             32,
             0x3366ff
         );
 
 
-
-        this.speed = 3;
-
-
-        // 이동 상태
-        this.move = {
-            up:false,
-            down:false,
-            left:false,
-            right:false
-        };
+        this.moveX = 0;
+        this.moveY = 0;
 
 
-        // 방향 버튼
+
+        // 모바일 방향키
+
         this.createButton(
-            w/2,
-            h-170,
+            60,
+            h-150,
             "▲",
-            "up"
+            ()=>{
+                this.moveX = 0;
+                this.moveY = -3;
+            }
         );
 
 
         this.createButton(
-            w/2,
-            h-50,
+            60,
+            h-70,
             "▼",
-            "down"
+            ()=>{
+                this.moveX = 0;
+                this.moveY = 3;
+            }
         );
 
 
         this.createButton(
-            w/2-70,
+            20,
             h-110,
             "◀",
-            "left"
+            ()=>{
+                this.moveX = -3;
+                this.moveY = 0;
+            }
         );
 
 
         this.createButton(
-            w/2+70,
+            100,
             h-110,
             "▶",
-            "right"
+            ()=>{
+                this.moveX = 3;
+                this.moveY = 0;
+            }
         );
+
 
     }
 
@@ -131,45 +133,33 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-    createButton(x,y,text,dir){
+    createButton(x,y,text,func){
 
-        let button = this.add.text(
+        let btn = this.add.text(
             x,
             y,
             text,
             {
-                fontSize:"50px",
-                color:"#ffffff",
+                fontSize:"40px",
                 backgroundColor:"#222222",
                 padding:10
             }
         )
         .setOrigin(0.5)
-        .setDepth(10)
         .setInteractive();
 
 
-
-        button.on(
+        btn.on(
             "pointerdown",
-            ()=>{
-                this.move[dir]=true;
-            }
+            func
         );
 
 
-        button.on(
+        btn.on(
             "pointerup",
             ()=>{
-                this.move[dir]=false;
-            }
-        );
-
-
-        button.on(
-            "pointerout",
-            ()=>{
-                this.move[dir]=false;
+                this.moveX = 0;
+                this.moveY = 0;
             }
         );
 
@@ -180,24 +170,8 @@ export default class TownScene extends Phaser.Scene {
     update(){
 
 
-        if(this.move.left){
-            this.player.x -= this.speed;
-        }
-
-
-        if(this.move.right){
-            this.player.x += this.speed;
-        }
-
-
-        if(this.move.up){
-            this.player.y -= this.speed;
-        }
-
-
-        if(this.move.down){
-            this.player.y += this.speed;
-        }
+        this.player.x += this.moveX;
+        this.player.y += this.moveY;
 
 
 
