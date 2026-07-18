@@ -1,155 +1,70 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const config = {
 
-const SIZE = 32;
+    type: Phaser.AUTO,
 
-let player = {
-    x: 5,
-    y: 5
+    width: 320,
+
+    height: 576,
+
+    backgroundColor:"#6ccf6c",
+
+    pixelArt:true,
+
+    scene:{
+        preload,
+        create,
+        update
+    }
+
 };
 
-const professor = {
-    x: 4,
-    y: 2
-};
+const game = new Phaser.Game(config);
 
-const map = [
-    "GGGGGGGGGG",
-    "GTTGGGGTTG",
-    "GGGGGGGGGG",
-    "GGGHHGGGGG",
-    "GGGGGGGGGG",
-    "GGGGGGGGGG",
-    "GGTTGGGGGG",
-    "GGGGGGTTGG",
-    "GGGGGGGGGG",
-    "GGGGGGGGGG"
-];
+let player;
+let cursors;
 
-function newGame() {
-    document.getElementById("titleScreen").classList.add("hidden");
-    document.getElementById("nameScreen").classList.remove("hidden");
+function preload(){
+
 }
 
-function startAdventure() {
+function create(){
 
-    const name = document.getElementById("playerName").value.trim();
-
-    if (name === "") {
-        alert("이름을 입력하세요!");
-        return;
-    }
-
-    document.getElementById("nameScreen").classList.add("hidden");
-    document.getElementById("gameScreen").classList.remove("hidden");
-
-    drawMap();
-}
-
-function drawMap() {
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let y = 0; y < 10; y++) {
-
-        for (let x = 0; x < 10; x++) {
-
-            const tile = map[y][x];
-
-            if (tile === "G") ctx.fillStyle = "#79d45b";
-            if (tile === "T") ctx.fillStyle = "#1d7f35";
-            if (tile === "H") ctx.fillStyle = "#8b5a2b";
-
-            ctx.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
-
-            if (tile === "H") {
-                ctx.fillStyle = "#d43d3d";
-                ctx.fillRect(x * SIZE + 8, y * SIZE + 8, 16, 16);
-            }
-        }
-    }
-
-    // 애드박사
-    ctx.fillStyle = "#ffcc66";
-    ctx.fillRect(
-        professor.x * SIZE + 6,
-        professor.y * SIZE + 6,
-        20,
-        20
+    player=this.add.rectangle(
+        160,
+        288,
+        16,
+        16,
+        0x0000ff
     );
 
-    // 플레이어
-    ctx.fillStyle = "#0066ff";
-    ctx.fillRect(
-        player.x * SIZE + 6,
-        player.y * SIZE + 6,
-        20,
-        20
-    );
+    cursors=this.input.keyboard.createCursorKeys();
+
 }
 
-function canMove(x, y) {
+function update(){
 
-    if (x < 0 || x > 9 || y < 0 || y > 9)
-        return false;
+    if(cursors.left.isDown){
 
-    const tile = map[y][x];
+        player.x-=2;
 
-    if (tile === "T") return false;
-    if (tile === "H") return false;
-
-    return true;
-}
-
-function movePlayer(dir) {
-
-    let nx = player.x;
-    let ny = player.y;
-
-    if (dir === "up") ny--;
-    if (dir === "down") ny++;
-    if (dir === "left") nx--;
-    if (dir === "right") nx++;
-
-    if (canMove(nx, ny)) {
-        player.x = nx;
-        player.y = ny;
     }
 
-    checkNPC();
+    else if(cursors.right.isDown){
 
-    drawMap();
-}
+        player.x+=2;
 
-document.addEventListener("keydown", function (e) {
+    }
 
-    if (e.key === "ArrowUp") movePlayer("up");
-    if (e.key === "ArrowDown") movePlayer("down");
-    if (e.key === "ArrowLeft") movePlayer("left");
-    if (e.key === "ArrowRight") movePlayer("right");
+    if(cursors.up.isDown){
 
-});
+        player.y-=2;
 
-function checkNPC() {
+    }
 
-    const dx = Math.abs(player.x - professor.x);
-    const dy = Math.abs(player.y - professor.y);
+    else if(cursors.down.isDown){
 
-    if (dx + dy === 1) {
-
-        document.getElementById("dialogText").innerText =
-            "애드박사 : 안녕! 몬스터를 연구하고 있단다. 조금만 기다려 주렴!";
-
-        document.getElementById("dialogBox").classList.remove("hidden");
+        player.y+=2;
 
     }
 
 }
-
-function closeDialog() {
-
-    document.getElementById("dialogBox").classList.add("hidden");
-
-}
-
-drawMap();
