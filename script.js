@@ -4,28 +4,27 @@ let player = {
 };
 
 const map = [
-"GGGGGGGGGG",
-"GTTGGGGTTG",
-"GGGGGGGGGG",
-"GGGHHGGGGG",
-"GGGGGGGGGG",
-"GGGGGGGGGG",
-"GGTTGGGGGG",
-"GGGGGGTTGG",
-"GGGGGGGGGG",
-"GGGGGGGGGG"
+    "GGGGGGGGGG",
+    "GTTGGGGTTG",
+    "GGGGGGGGGG",
+    "GGGHHGGGGG",
+    "GGGGGGGGGG",
+    "GGGGGGGGGG",
+    "GGTTGGGGGG",
+    "GGGGGGTTGG",
+    "GGGGGGGGGG",
+    "GGGGGGGGGG"
 ];
 
-function newGame(){
+function newGame() {
     document.getElementById("titleScreen").classList.add("hidden");
     document.getElementById("nameScreen").classList.remove("hidden");
 }
 
-function startAdventure(){
-
+function startAdventure() {
     const name = document.getElementById("playerName").value.trim();
 
-    if(name===""){
+    if (name === "") {
         alert("이름을 입력하세요!");
         return;
     }
@@ -36,12 +35,12 @@ function startAdventure(){
     drawMap();
 }
 
-function drawMap(){
+function drawMap() {
 
-    const canvas=document.getElementById("gameCanvas");
-    const ctx=canvas.getContext("2d");
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
 
-    const size=32;
+    const size = 32;
 
     ctx.clearRect(0,0,320,320);
 
@@ -49,7 +48,7 @@ function drawMap(){
 
         for(let x=0;x<10;x++){
 
-            let tile=map[y][x];
+            let tile = map[y][x];
 
             if(tile==="G"){
                 ctx.fillStyle="#79d45b";
@@ -69,9 +68,7 @@ function drawMap(){
                 ctx.fillStyle="#d43d3d";
                 ctx.fillRect(x*size+8,y*size+8,16,16);
             }
-
         }
-
     }
 
     ctx.fillStyle="blue";
@@ -81,7 +78,6 @@ function drawMap(){
         20,
         20
     );
-
 }
 
 document.addEventListener("keydown",function(e){
@@ -106,7 +102,6 @@ document.addEventListener("keydown",function(e){
 
         default:
             return;
-
     }
 
     drawMap();
