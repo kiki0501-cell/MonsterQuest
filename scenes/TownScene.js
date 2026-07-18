@@ -21,8 +21,7 @@ export default class TownScene extends Phaser.Scene {
             "새벽마을",
             {
                 fontSize:"48px",
-                color:"#ffffff",
-                fontFamily:"Jua"
+                color:"#ffffff"
             }
         ).setOrigin(0.5);
 
@@ -50,17 +49,51 @@ export default class TownScene extends Phaser.Scene {
 
 
         // 나무
-        this.createTree(60,200);
-        this.createTree(w-60,200);
-        this.createTree(80,450);
-        this.createTree(w-80,450);
+        this.add.text(
+            60,
+            200,
+            "🌲",
+            {
+                fontSize:"60px"
+            }
+        ).setOrigin(0.5);
+
+
+        this.add.text(
+            w-60,
+            200,
+            "🌲",
+            {
+                fontSize:"60px"
+            }
+        ).setOrigin(0.5);
+
+
+        this.add.text(
+            80,
+            450,
+            "🌲",
+            {
+                fontSize:"60px"
+            }
+        ).setOrigin(0.5);
+
+
+        this.add.text(
+            w-80,
+            450,
+            "🌲",
+            {
+                fontSize:"60px"
+            }
+        ).setOrigin(0.5);
 
 
 
         // 플레이어
         this.player = this.add.rectangle(
-            w / 2,
-            h / 2,
+            w/2,
+            h/2,
             32,
             32,
             0x3366ff
@@ -75,95 +108,74 @@ export default class TownScene extends Phaser.Scene {
 
         // 방향키
 
-        this.createButton(
-            60,
-            520,
+        this.makeButton(
+            300,
+            480,
             "▲",
-            ()=>{
-                this.moveX = 0;
-                this.moveY = -3;
-            }
+            0,
+            -3
         );
 
 
-        this.createButton(
-            60,
-            600,
+        this.makeButton(
+            300,
+            580,
             "▼",
-            ()=>{
-                this.moveX = 0;
-                this.moveY = 3;
-            }
+            0,
+            3
         );
 
 
-        this.createButton(
-            20,
-            560,
+        this.makeButton(
+            240,
+            530,
             "◀",
-            ()=>{
-                this.moveX = -3;
-                this.moveY = 0;
-            }
+            -3,
+            0
         );
 
 
-        this.createButton(
-            100,
-            560,
+        this.makeButton(
+            360,
+            530,
             "▶",
-            ()=>{
-                this.moveX = 3;
-                this.moveY = 0;
-            }
+            3,
+            0
         );
 
     }
 
 
 
-    createTree(x,y){
+    makeButton(x,y,text,mx,my){
 
-        this.add.text(
-            x,
-            y,
-            "🌲",
-            {
-                fontSize:"60px"
-            }
-        ).setOrigin(0.5);
-
-    }
-
-
-
-    createButton(x,y,text,func){
-
-        let btn = this.add.text(
+        const button = this.add.text(
             x,
             y,
             text,
             {
-                fontSize:"40px",
+                fontSize:"50px",
                 color:"#ffffff",
-                backgroundColor:"#222222",
+                backgroundColor:"#000000",
                 padding:10
             }
         )
         .setOrigin(0.5)
-        .setDepth(10)
-        .setScrollFactor(0)
+        .setDepth(100)
         .setInteractive();
 
 
 
-        btn.on(
+        button.on(
             "pointerdown",
-            func
+            ()=>{
+                this.moveX = mx;
+                this.moveY = my;
+            }
         );
 
 
-        btn.on(
+        button.on(
             "pointerup",
             ()=>{
                 this.moveX = 0;
@@ -172,7 +184,7 @@ export default class TownScene extends Phaser.Scene {
         );
 
 
-        btn.on(
+        button.on(
             "pointerout",
             ()=>{
                 this.moveX = 0;
@@ -186,27 +198,22 @@ export default class TownScene extends Phaser.Scene {
 
     update(){
 
-
         this.player.x += this.moveX;
         this.player.y += this.moveY;
 
 
-
-        this.player.x =
-        Phaser.Math.Clamp(
+        this.player.x = Phaser.Math.Clamp(
             this.player.x,
             16,
             this.scale.width-16
         );
 
 
-        this.player.y =
-        Phaser.Math.Clamp(
+        this.player.y = Phaser.Math.Clamp(
             this.player.y,
             16,
             this.scale.height-16
         );
-
 
     }
 
