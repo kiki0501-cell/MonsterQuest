@@ -1,3 +1,4 @@
+
 export default class TownScene extends Phaser.Scene {
 
     constructor(){
@@ -11,19 +12,16 @@ export default class TownScene extends Phaser.Scene {
         const h = this.scale.height;
 
 
-        // 배경
         this.cameras.main.setBackgroundColor("#3a7d44");
 
 
-        // 마을 이름
         this.add.text(
             w / 2,
             60,
             "새벽마을",
             {
                 fontSize:"48px",
-                color:"#ffffff",
-                fontFamily:"Jua"
+                color:"#ffffff"
             }
         ).setOrigin(0.5);
 
@@ -60,18 +58,30 @@ export default class TownScene extends Phaser.Scene {
 
         // 플레이어
         this.player = this.add.rectangle(
-            w / 2,
-            h / 2,
+            w/2,
+            h/2,
             32,
             32,
             0x3366ff
         );
 
 
+        this.speed = 3;
 
-        this.cursors =
-        this.input.keyboard.createCursorKeys();
 
+        // 방향 버튼
+        this.createButton(w/2, h-150, "▲", "up");
+        this.createButton(w/2, h-50, "▼", "down");
+        this.createButton(w/2-70, h-100, "◀", "left");
+        this.createButton(w/2+70, h-100, "▶", "right");
+
+
+        this.move = {
+            up:false,
+            down:false,
+            left:false,
+            right:false
+        };
 
     }
 
@@ -92,41 +102,69 @@ export default class TownScene extends Phaser.Scene {
 
 
 
+    createButton(x,y,text,dir){
+
+        let btn = this.add.text(
+            x,
+            y,
+            text,
+            {
+                fontSize:"50px",
+                backgroundColor:"#000000",
+                padding:10
+            }
+        )
+        .setOrigin(0.5)
+        .setInteractive();
+
+
+        btn.on("pointerdown",()=>{
+            this.move[dir]=true;
+        });
+
+
+        btn.on("pointerup",()=>{
+            this.move[dir]=false;
+        });
+
+
+        btn.on("pointerout",()=>{
+            this.move[dir]=false;
+        });
+
+    }
+
+
+
     update(){
 
-        let speed = 3;
 
-
-        if(this.cursors.left.isDown){
-            this.player.x -= speed;
+        if(this.move.left){
+            this.player.x -= this.speed;
         }
 
-        if(this.cursors.right.isDown){
-            this.player.x += speed;
+        if(this.move.right){
+            this.player.x += this.speed;
         }
 
-        if(this.cursors.up.isDown){
-            this.player.y -= speed;
+        if(this.move.up){
+            this.player.y -= this.speed;
         }
 
-        if(this.cursors.down.isDown){
-            this.player.y += speed;
+        if(this.move.down){
+            this.player.y += this.speed;
         }
 
 
 
-        // 화면 밖 못 나가게
-
-        this.player.x =
-        Phaser.Math.Clamp(
+        this.player.x = Phaser.Math.Clamp(
             this.player.x,
             16,
             this.scale.width-16
         );
 
 
-        this.player.y =
-        Phaser.Math.Clamp(
+        this.player.y = Phaser.Math.Clamp(
             this.player.y,
             16,
             this.scale.height-16
