@@ -1,109 +1,123 @@
-let player = {
-    x: 5,
-    y: 5
-};
-
-const map = [
-    "GGGGGGGGGG",
-    "GTTGGGGTTG",
-    "GGGGGGGGGG",
-    "GGGHHGGGGG",
-    "GGGGGGGGGG",
-    "GGGGGGGGGG",
-    "GGTTGGGGGG",
-    "GGGGGGTTGG",
-    "GGGGGGGGGG",
-    "GGGGGGGGGG"
-];
-
-function newGame() {
-    document.getElementById("titleScreen").classList.add("hidden");
-    document.getElementById("nameScreen").classList.remove("hidden");
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
-function startAdventure() {
-    const name = document.getElementById("playerName").value.trim();
-
-    if (name === "") {
-        alert("이름을 입력하세요!");
-        return;
-    }
-
-    document.getElementById("nameScreen").classList.add("hidden");
-    document.getElementById("gameScreen").classList.remove("hidden");
-
-    drawMap();
+body{
+    background:#14213d;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:white;
 }
 
-function drawMap() {
-
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
-
-    const size = 32;
-
-    ctx.clearRect(0,0,320,320);
-
-    for(let y=0;y<10;y++){
-
-        for(let x=0;x<10;x++){
-
-            let tile = map[y][x];
-
-            if(tile==="G"){
-                ctx.fillStyle="#79d45b";
-            }
-
-            if(tile==="T"){
-                ctx.fillStyle="#1d7f35";
-            }
-
-            if(tile==="H"){
-                ctx.fillStyle="#8b5a2b";
-            }
-
-            ctx.fillRect(x*size,y*size,size,size);
-
-            if(tile==="H"){
-                ctx.fillStyle="#d43d3d";
-                ctx.fillRect(x*size+8,y*size+8,16,16);
-            }
-        }
-    }
-
-    ctx.fillStyle="blue";
-    ctx.fillRect(
-        player.x*size+6,
-        player.y*size+6,
-        20,
-        20
-    );
+.screen{
+    text-align:center;
 }
 
-document.addEventListener("keydown",function(e){
+.hidden{
+    display:none;
+}
 
-    switch(e.key){
+h1{
+    font-size:48px;
+    margin-bottom:50px;
+}
 
-        case "ArrowUp":
-            if(player.y>0) player.y--;
-            break;
+h2{
+    margin-bottom:15px;
+}
 
-        case "ArrowDown":
-            if(player.y<9) player.y++;
-            break;
+button{
+    display:block;
+    width:220px;
+    margin:15px auto;
+    padding:15px;
+    font-size:22px;
+    background:#2ecc71;
+    color:white;
+    border:none;
+    border-radius:12px;
+}
 
-        case "ArrowLeft":
-            if(player.x>0) player.x--;
-            break;
+button:active{
+    transform:scale(0.96);
+}
 
-        case "ArrowRight":
-            if(player.x<9) player.x++;
-            break;
+input{
+    width:220px;
+    padding:12px;
+    font-size:20px;
+    margin:20px 0;
+}
 
-        default:
-            return;
-    }
+canvas{
+    margin-top:15px;
+    border:4px solid white;
+    image-rendering:pixelated;
+}
 
-    drawMap();
+/* ---------- 방향패드 ---------- */
 
-});
+#controls{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+
+.middle{
+    display:flex;
+    gap:10px;
+}
+
+.move{
+    width:70px;
+    height:70px;
+    margin:0;
+    padding:0;
+    font-size:28px;
+    border-radius:18px;
+    background:#3b82f6;
+}
+
+.move.center{
+    background:#666;
+}
+
+/* ---------- 대화창 ---------- */
+
+#dialogBox{
+
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    width:320px;
+
+    background:white;
+
+    color:black;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    box-shadow:0 0 15px rgba(0,0,0,.4);
+
+}
+
+#dialogText{
+
+    font-size:18px;
+
+    margin-bottom:15px;
+
+}
