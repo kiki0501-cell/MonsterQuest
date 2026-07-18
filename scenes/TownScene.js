@@ -49,44 +49,10 @@ export default class TownScene extends Phaser.Scene {
 
 
         // 나무
-        this.add.text(
-            60,
-            200,
-            "🌲",
-            {
-                fontSize:"60px"
-            }
-        ).setOrigin(0.5);
-
-
-        this.add.text(
-            w-60,
-            200,
-            "🌲",
-            {
-                fontSize:"60px"
-            }
-        ).setOrigin(0.5);
-
-
-        this.add.text(
-            80,
-            450,
-            "🌲",
-            {
-                fontSize:"60px"
-            }
-        ).setOrigin(0.5);
-
-
-        this.add.text(
-            w-80,
-            450,
-            "🌲",
-            {
-                fontSize:"60px"
-            }
-        ).setOrigin(0.5);
+        this.createTree(60,200);
+        this.createTree(w-60,200);
+        this.createTree(80,450);
+        this.createTree(w-80,450);
 
 
 
@@ -106,11 +72,11 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-        // 방향키
+        // 방향키 위치
 
         this.makeButton(
-            300,
-            480,
+            70,
+            h-170,
             "▲",
             0,
             -3
@@ -118,8 +84,8 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.makeButton(
-            300,
-            580,
+            70,
+            h-70,
             "▼",
             0,
             3
@@ -127,8 +93,8 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.makeButton(
-            240,
-            530,
+            20,
+            h-120,
             "◀",
             -3,
             0
@@ -136,8 +102,8 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.makeButton(
-            360,
-            530,
+            120,
+            h-120,
             "▶",
             3,
             0
@@ -147,26 +113,51 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-    makeButton(x,y,text,mx,my){
+    createTree(x,y){
 
-        const button = this.add.text(
+        this.add.text(
             x,
             y,
-            text,
+            "🌲",
             {
-                fontSize:"50px",
-                color:"#ffffff",
-                backgroundColor:"#000000",
-                padding:10
+                fontSize:"60px"
             }
+        ).setOrigin(0.5);
+
+    }
+
+
+
+    makeButton(x,y,text,mx,my){
+
+
+        let circle = this.add.circle(
+            x,
+            y,
+            28,
+            0x000000,
+            0.45
         )
-        .setOrigin(0.5)
         .setDepth(100)
         .setInteractive();
 
 
 
-        button.on(
+        let arrow = this.add.text(
+            x,
+            y,
+            text,
+            {
+                fontSize:"28px",
+                color:"#ffffff"
+            }
+        )
+        .setOrigin(0.5)
+        .setDepth(101);
+
+
+
+        circle.on(
             "pointerdown",
             ()=>{
                 this.moveX = mx;
@@ -175,7 +166,7 @@ export default class TownScene extends Phaser.Scene {
         );
 
 
-        button.on(
+        circle.on(
             "pointerup",
             ()=>{
                 this.moveX = 0;
@@ -184,7 +175,7 @@ export default class TownScene extends Phaser.Scene {
         );
 
 
-        button.on(
+        circle.on(
             "pointerout",
             ()=>{
                 this.moveX = 0;
