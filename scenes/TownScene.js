@@ -14,8 +14,9 @@ export default class TownScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor("#3a7d44");
 
 
+        // 마을 이름
         this.add.text(
-            w/2,
+            w / 2,
             60,
             "새벽마을",
             {
@@ -27,8 +28,9 @@ export default class TownScene extends Phaser.Scene {
 
 
 
+        // 집
         this.add.rectangle(
-            w/2,
+            w / 2,
             220,
             120,
             100,
@@ -37,7 +39,7 @@ export default class TownScene extends Phaser.Scene {
 
 
         this.add.text(
-            w/2,
+            w / 2,
             220,
             "🏠",
             {
@@ -47,6 +49,7 @@ export default class TownScene extends Phaser.Scene {
 
 
 
+        // 나무
         this.createTree(60,200);
         this.createTree(w-60,200);
         this.createTree(80,450);
@@ -54,13 +57,15 @@ export default class TownScene extends Phaser.Scene {
 
 
 
+        // 플레이어
         this.player = this.add.rectangle(
-            w/2,
-            h/2,
+            w / 2,
+            h / 2,
             32,
             32,
             0x3366ff
         );
+
 
 
         this.moveX = 0;
@@ -68,11 +73,11 @@ export default class TownScene extends Phaser.Scene {
 
 
 
-        // 모바일 방향키
+        // 방향키
 
         this.createButton(
             60,
-            h-150,
+            520,
             "▲",
             ()=>{
                 this.moveX = 0;
@@ -83,7 +88,7 @@ export default class TownScene extends Phaser.Scene {
 
         this.createButton(
             60,
-            h-70,
+            600,
             "▼",
             ()=>{
                 this.moveX = 0;
@@ -94,7 +99,7 @@ export default class TownScene extends Phaser.Scene {
 
         this.createButton(
             20,
-            h-110,
+            560,
             "◀",
             ()=>{
                 this.moveX = -3;
@@ -105,14 +110,13 @@ export default class TownScene extends Phaser.Scene {
 
         this.createButton(
             100,
-            h-110,
+            560,
             "▶",
             ()=>{
                 this.moveX = 3;
                 this.moveY = 0;
             }
         );
-
 
     }
 
@@ -141,12 +145,16 @@ export default class TownScene extends Phaser.Scene {
             text,
             {
                 fontSize:"40px",
+                color:"#ffffff",
                 backgroundColor:"#222222",
                 padding:10
             }
         )
         .setOrigin(0.5)
+        .setDepth(10)
+        .setScrollFactor(0)
         .setInteractive();
+
 
 
         btn.on(
@@ -157,6 +165,15 @@ export default class TownScene extends Phaser.Scene {
 
         btn.on(
             "pointerup",
+            ()=>{
+                this.moveX = 0;
+                this.moveY = 0;
+            }
+        );
+
+
+        btn.on(
+            "pointerout",
             ()=>{
                 this.moveX = 0;
                 this.moveY = 0;
