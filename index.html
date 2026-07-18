@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Monster Quest</title>
 
 <link rel="stylesheet" href="style.css">
-</head>
 
+</head>
 <body>
 
 <!-- 타이틀 화면 -->
@@ -15,21 +16,13 @@
 
     <h1>MONSTER<br>QUEST</h1>
 
-    <button onclick="newGame()">
-        새 게임
-    </button>
-
-    <button>
-        이어하기
-    </button>
-
-    <button>
-        설정
-    </button>
+    <button onclick="newGame()">새 게임</button>
+    <button>이어하기</button>
+    <button>설정</button>
 
 </div>
 
-<!-- 이름 입력 화면 -->
+<!-- 이름 입력 -->
 <div id="nameScreen" class="screen hidden">
 
     <h2>플레이어 이름</h2>
@@ -43,6 +36,19 @@
     <button onclick="startAdventure()">
         모험 시작
     </button>
+
+</div>
+
+<!-- 게임 화면 -->
+<div id="gameScreen" class="screen hidden">
+
+    <h2 id="townName">새벽마을</h2>
+
+    <canvas
+        id="gameCanvas"
+        width="320"
+        height="320">
+    </canvas>
 
 </div>
 
