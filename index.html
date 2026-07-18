@@ -5,74 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monster Quest</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    background:#14213d;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    color:white;
-}
-
-#menu{
-    text-align:center;
-}
-
-h1{
-    font-size:48px;
-    margin-bottom:50px;
-}
-
-button{
-    display:block;
-    width:220px;
-    margin:15px auto;
-    padding:15px;
-    font-size:22px;
-    background:#2ecc71;
-    color:white;
-    border:none;
-    border-radius:12px;
-}
-
-button:hover{
-    background:#27ae60;
-}
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="menu">
+<!-- 타이틀 화면 -->
+<div id="titleScreen" class="screen">
 
-<h1>MONSTER QUEST</h1>
+    <h1>MONSTER<br>QUEST</h1>
 
-<button onclick="newGame()">새 게임</button>
+    <button onclick="newGame()">
+        새 게임
+    </button>
 
-<button>이어하기</button>
+    <button>
+        이어하기
+    </button>
 
-<button>설정</button>
+    <button>
+        설정
+    </button>
 
 </div>
 
-<script>
+<!-- 이름 입력 화면 -->
+<div id="nameScreen" class="screen hidden">
 
-function newGame(){
+    <h2>플레이어 이름</h2>
 
-alert("Monster Quest 개발 시작!");
+    <input
+        id="playerName"
+        type="text"
+        maxlength="10"
+        placeholder="이름 입력">
 
-}
+    <button onclick="startAdventure()">
+        모험 시작
+    </button>
 
-</script>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
